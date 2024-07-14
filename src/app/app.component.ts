@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {initFlowbite} from "flowbite";
 import {NavigationComponent} from "./navigation/navigation.component";
+import {TimePeriod} from "./utils/interfaces/timeperiod";
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,13 @@ import {NavigationComponent} from "./navigation/navigation.component";
 })
 export class AppComponent implements OnInit {
   title = 'schoenes-wetter';
+  periodOfTime!: TimePeriod;
 
   ngOnInit(): void {
     initFlowbite()
+  }
+
+  changePeriod(period: TimePeriod): void {
+
   }
 }

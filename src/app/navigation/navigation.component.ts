@@ -1,6 +1,7 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, inject, OnInit, Output} from '@angular/core';
 import {TimePeriod} from "../utils/interfaces/timeperiod";
 import {DateRangePicker} from "flowbite-datepicker";
+import {DataService} from "../utils/services/data.service";
 
 @Component({
   selector: 'app-navigation',
@@ -10,10 +11,13 @@ import {DateRangePicker} from "flowbite-datepicker";
   styleUrl: './navigation.component.scss'
 })
 export class NavigationComponent implements OnInit {
-  @Output() periodOfTime: TimePeriod = {start: new Date(), end: new Date()};
+  dataService = inject(DataService)
+
+  periodOfTime: TimePeriod = {start: new Date(), end: new Date()};
 
   ngOnInit(): void {
     this.initDatePicker()
+
   }
 
   initDatePicker() {
