@@ -1,0 +1,54 @@
+<ng-template #Entry let-time="time" let-icon="icon" let-temp="temp">
+  <div class="text-gray-300 me-4">
+    <div class="font-bold text-sm text-center">{{ time }}</div>
+    <div class="mt-2 justify-center flex">
+      <ng-container [ngSwitch]="icon">
+        <i *ngSwitchCase="'cloud'" class="fa-solid fa-cloud"></i>
+        <fa-icon [icon]="faCloud"></fa-icon>
+      </ng-container>
+    </div>
+    <div class="font-bold text-sm text-center mt-2">{{ temp }}°</div>
+  </div>
+</ng-template>
+
+<div class="flex flex-col">
+  <div class="relative w-full">
+    <img src="cloudy_1.webp" alt="Cloudy" class="h-screen">
+    <div class="absolute inset-0 bg-slate-800 bg-opacity-60">
+      <div class="mt-20 grid grid-cols-1 grid-rows-4">
+        <div class="col-span-1 text-4xl font-bold text-gray-200 text-center content-center">Berlin</div>
+        <div class="col-span-1 -mt-4 text-7xl font-extralight text-gray-200 text-center content-center">12°</div>
+        <div class="col-span-1 text-md font-medium text-gray-200 text-center content-center h-8">Wolkig</div>
+        <div class="col-span-1 -mt-8 text-md font-medium text-gray-200 text-center content-center h-8">H:65° L:42°</div>
+      </div>
+      <div class="mt-10 max-w-screen-md mx-auto">
+        <div class="bg-slate-700 rounded-md">
+          <div class="p-6">
+            <div class="text-gray-300">Es bleibt die nächsten Stunden Windig.</div>
+            <hr class="mt-4 mb-4 border-gray-500">
+            <div class="flex overflow-x-scroll">
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': 'Jetzt', 'icon': 'cloud', 'temp': '12'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '08:00', 'icon': 'cloud', 'temp': '12'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '09:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '10:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '11:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '12:00', 'icon': 'cloud', 'temp': '14'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '13:00', 'icon': 'cloud', 'temp': '15'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '14:00', 'icon': 'cloud', 'temp': '15'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '15:00', 'icon': 'cloud', 'temp': '15'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '16:00', 'icon': 'cloud', 'temp': '15'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '17:00', 'icon': 'cloud', 'temp': '14'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '18:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '19:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '20:00', 'icon': 'cloud', 'temp': '12'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '21:00', 'icon': 'cloud', 'temp': '11'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '22:00', 'icon': 'cloud', 'temp': '10'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '23:00', 'icon': 'cloud', 'temp': '9'}"></ng-container>
+              <ng-container *ngTemplateOutlet="Entry; context: {'time': '00:00', 'icon': 'cloud', 'temp': '8'}"></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
