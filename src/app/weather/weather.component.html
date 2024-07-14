@@ -54,7 +54,9 @@
                   <div class="text-gray-300">Es bleibt die nächsten Stunden Windig.</div>
                   <hr class="mt-4 mb-4 border-gray-500">
                   <div class="flex overflow-x-scroll">
-                    <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': 'Jetzt', 'icon': 'cloud', 'temp': '12'}"></ng-container>
+                    <span>{{data | keyvalue | json}}</span>
+                    <!--Example Data-->
+                    <!--<ng-container *ngTemplateOutlet="TimeEntry; context: {'time': 'Jetzt', 'icon': 'cloud', 'temp': '12'}"></ng-container>
                     <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '08:00', 'icon': 'cloud_rain', 'temp': '12', 'rain_possible': '10'}"></ng-container>
                     <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '09:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
                     <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '10:00', 'icon': 'cloud', 'temp': '13'}"></ng-container>
@@ -71,7 +73,7 @@
                     <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '21:00', 'icon': 'cloud', 'temp': '11'}"></ng-container>
                     <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '22:00', 'icon': 'cloud', 'temp': '10'}"></ng-container>
                     <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '23:00', 'icon': 'cloud', 'temp': '9'}"></ng-container>
-                    <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '00:00', 'icon': 'cloud', 'temp': '8'}"></ng-container>
+                    <ng-container *ngTemplateOutlet="TimeEntry; context: {'time': '00:00', 'icon': 'cloud', 'temp': '8'}"></ng-container>-->
                   </div>
                 </div>
               </div>
@@ -93,13 +95,14 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-1 row-span-1">
+            <!--Original für Karte gedacht-->
+            <!--<div class="col-span-1 row-span-1">
               <div class="bg-slate-700 rounded-md">
                 <div class="p-6">
                   <div class="text-gray-400">Radar</div>
                 </div>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>

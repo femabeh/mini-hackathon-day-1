@@ -15,7 +15,6 @@ import { WeatherParams } from './utils/interfaces/weather-params';
 })
 export class AppComponent implements OnInit {
   title = 'schoenes-wetter';
-  periodOfTime!: TimePeriod;
 
   city: string = '';
   latitude: number | undefined;
@@ -28,11 +27,9 @@ export class AppComponent implements OnInit {
     this.searchCity();
   }
 
-  changePeriod(period: TimePeriod): void {}
-
   async searchCity() {
     const cityData = await this.dataService.fetchCityData('München');
-    console.log('cityData', cityData);
+    //console.log('cityData', cityData);
     this.latitude = cityData.results[0].latitude;
     this.longitude = cityData.results[0].longitude;
 
@@ -51,7 +48,7 @@ export class AppComponent implements OnInit {
       const locationWeatherData =
         await this.dataService.fetchLocationWeatherData(params);
 
-      console.log('data: ', locationWeatherData);
+      //console.log('data: ', locationWeatherData);
     }
   }
 }
