@@ -6,17 +6,7 @@ import { WeatherParams } from '../interfaces/weather-params';
   providedIn: 'root',
 })
 export class DataService {
-  async fetchWeatherData(
-    params: WeatherParams,
-    forecastType: 'hourly' | 'daily',
-    temperatureAtElevation: string
-  ) {
-    if (forecastType === 'hourly') {
-      params['hourly'] = temperatureAtElevation;
-    } else if (forecastType === 'daily') {
-      params['daily'] = temperatureAtElevation;
-    }
-
+  async fetchLocationWeatherData(params: WeatherParams) {
     const url = 'https://api.open-meteo.com/v1/forecast';
     const responses = await fetchWeatherApi(url, params);
     const range = (start: number, stop: number, step: number) =>
@@ -27,71 +17,57 @@ export class DataService {
     const timezoneAbbreviation = response.timezoneAbbreviation();
     const latitude = response.latitude();
     const longitude = response.longitude();
-    let weatherData;
 
-    if (forecastType === 'hourly') {
-      const hourly = response.hourly()!;
-      weatherData = {
-        hourly: {
-          time: range(
-            Number(hourly.time()),
-            Number(hourly.timeEnd()),
-            hourly.interval()
-          ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
-          temperature2m: hourly.variables(0)!.valuesArray()!,
-        },
-      };
-    } else if (forecastType === 'daily') {
-      const daily = response.daily()!;
-      weatherData = {
-        daily: {
-          time: range(
-            Number(daily.time()),
-            Number(daily.timeEnd()),
-            daily.interval()
-          ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
-          [this.determineTemperaturePropertyName(temperatureAtElevation)]: daily
-            .variables(0)!
-            .valuesArray()!,
-        },
-      };
-    }
+    const current = response.current()!;
+    const hourly = response.hourly()!;
+    const daily = response.daily()!;
+
+    let weatherData;
+    weatherData = {
+      current: {
+        time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+        temperature2m: current.variables(0)!.value(),
+        relativeHumidity2m: current.variables(1)!.value(),
+        isDay: current.variables(2)!.value(),
+        precipitation: current.variables(3)!.value(),
+        weatherCode: current.variables(4)!.value(),
+        cloudCover: current.variables(5)!.value(),
+        pressureMsl: current.variables(6)!.value(),
+        surfacePressure: current.variables(7)!.value(),
+        windSpeed10m: current.variables(8)!.value(),
+        windDirection10m: current.variables(9)!.value(),
+        windGusts10m: current.variables(10)!.value(),
+      },
+      hourly: {
+        time: range(
+          Number(hourly.time()),
+          Number(hourly.timeEnd()),
+          hourly.interval()
+        ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+        temperature2m: hourly.variables(0)!.valuesArray()!,
+        precipitation: hourly.variables(1)!.valuesArray()!,
+        weatherCode: hourly.variables(2)!.valuesArray()!,
+      },
+      daily: {
+        time: range(
+          Number(daily.time()),
+          Number(daily.timeEnd()),
+          daily.interval()
+        ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+        weatherCode: daily.variables(0)!.valuesArray()!,
+        temperature2mMax: daily.variables(1)!.valuesArray()!,
+        temperature2mMin: daily.variables(2)!.valuesArray()!,
+        sunrise: daily.variables(3)!.valuesArray()!,
+        sunset: daily.variables(4)!.valuesArray()!,
+        precipitationSum: daily.variables(5)!.valuesArray()!,
+        precipitationProbabilityMax: daily.variables(6)!.valuesArray()!,
+        windSpeed10mMax: daily.variables(7)!.valuesArray()!,
+        windGusts10mMax: daily.variables(8)!.valuesArray()!,
+        windDirection10mDominant: daily.variables(9)!.valuesArray()!,
+      },
+    };
 
     return weatherData;
-  }
-
-  async fetchLocationWeatherData(params: WeatherParams) {
-    const hourlyData = await this.fetchWeatherData(
-      params,
-      'hourly',
-      'temperature_2m'
-    );
-
-    const dailyMinData = await this.fetchWeatherData(
-      params,
-      'daily',
-      'temperature_2m_min'
-    );
-
-    const dailyMaxData = await this.fetchWeatherData(
-      params,
-      'daily',
-      'temperature_2m_max'
-    );
-
-    return {
-      hourly: hourlyData?.hourly,
-      dailyMin: dailyMinData?.daily,
-      dailyMax: dailyMaxData?.daily,
-    };
-  }
-
-  private determineTemperaturePropertyName(
-    temperatureAtElevation: string
-  ): string {
-    return temperatureAtElevation.includes('min')
-      ? 'minTemperature2m'
-      : 'maxTemperature2m';
   }
 
   async fetchCityData(cityName: string) {

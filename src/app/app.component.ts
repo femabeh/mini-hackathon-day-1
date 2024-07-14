@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { NavigationComponent } from './navigation/navigation.component';
-import { TimePeriod } from './utils/interfaces/timeperiod';
 import { DataService } from './utils/services/data.service';
 import { WeatherParams } from './utils/interfaces/weather-params';
+import { defaultWeatherParams } from './config/weather-params';
 
 @Component({
   selector: 'app-root',
@@ -41,9 +41,9 @@ export class AppComponent implements OnInit {
   async getWeather() {
     if (this.latitude && this.longitude) {
       const params: WeatherParams = {
+        ...defaultWeatherParams,
         latitude: this.latitude,
         longitude: this.longitude,
-        models: 'icon_seamless',
       };
       const locationWeatherData =
         await this.dataService.fetchLocationWeatherData(params);

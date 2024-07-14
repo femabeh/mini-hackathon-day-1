@@ -4,6 +4,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faCloud, faCloudRain, faCloudSun, faSun} from "@fortawesome/free-solid-svg-icons";
 import {DataService} from "../utils/services/data.service";
 import {WeatherParams} from "../utils/interfaces/weather-params";
+import { defaultWeatherParams } from '../config/weather-params';
 
 @Component({
   selector: 'app-weather',
@@ -16,13 +17,13 @@ import {WeatherParams} from "../utils/interfaces/weather-params";
     NgIf,
     JsonPipe,
     NgForOf,
-    KeyValuePipe
+    KeyValuePipe,
   ],
   templateUrl: './weather.component.html',
-  styleUrl: './weather.component.scss'
+  styleUrl: './weather.component.scss',
 })
 export class WeatherComponent implements AfterViewInit {
-  dataService = inject(DataService)
+  dataService = inject(DataService);
 
   protected readonly faCloud = faCloud;
   protected readonly faCloudSun = faCloudSun;
@@ -31,23 +32,29 @@ export class WeatherComponent implements AfterViewInit {
 
   lat: number = 0;
   lng: number = 0;
-  data: any
+  data: any;
 
   ngAfterViewInit(): void {
-    this.getData()
+    this.getData();
   }
 
   async getData() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
           if (position) {
-            let params = <WeatherParams>{'latitude': this.lat, 'longitude': this.lng, 'models': 'icon_seamless'}
-            this.data = await this.dataService.fetchLocationWeatherData(params)
+            const params: WeatherParams = {
+              ...defaultWeatherParams,
+              latitude: this.lat,
+              longitude: this.lng,
+            };
+            this.data = await this.dataService.fetchLocationWeatherData(params);
           }
         },
-        (error) => console.log(error));
+        (error) => console.log(error)
+      );
     } else {
-      alert("Geolocation is not supported by this browser.");
+      alert('Geolocation is not supported by this browser.');
     }
   }
 }
