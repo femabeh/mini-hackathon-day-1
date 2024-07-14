@@ -30,13 +30,11 @@ export class AppComponent implements OnInit {
 
   changePeriod(period: TimePeriod): void {}
 
-  searchCity() {
-    // TODO: Implementieren Sie hier Ihre Logik zur Umwandlung des Stadtnamens in Koordinaten
-    // Beispielsweise mit einem Geocoding-Service
-
-    // Beispielhafte Koordinaten für Berlin:
-    this.latitude = 52.52;
-    this.longitude = 13.41;
+  async searchCity() {
+    const cityData = await this.dataService.fetchCityData('München');
+    console.log('cityData', cityData);
+    this.latitude = cityData.results[0].latitude;
+    this.longitude = cityData.results[0].longitude;
 
     if (this.latitude && this.longitude) {
       this.getWeather();
@@ -50,9 +48,8 @@ export class AppComponent implements OnInit {
         longitude: this.longitude,
         models: 'icon_seamless',
       };
-      const locationWeatherData = await this.dataService.fetchLocationWeatherData(
-        params
-      );
+      const locationWeatherData =
+        await this.dataService.fetchLocationWeatherData(params);
 
       console.log('data: ', locationWeatherData);
     }
