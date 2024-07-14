@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {NgSwitch, NgSwitchCase, NgTemplateOutlet} from "@angular/common";
+import {NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faCloud} from "@fortawesome/free-solid-svg-icons";
+import {faCloud, faCloudRain, faCloudSun, faSun} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-weather',
@@ -10,7 +10,8 @@ import {faCloud} from "@fortawesome/free-solid-svg-icons";
     NgTemplateOutlet,
     NgSwitchCase,
     NgSwitch,
-    FaIconComponent
+    FaIconComponent,
+    NgIf
   ],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.scss'
@@ -18,4 +19,7 @@ import {faCloud} from "@fortawesome/free-solid-svg-icons";
 export class WeatherComponent {
 
   protected readonly faCloud = faCloud;
+  protected readonly faCloudSun = faCloudSun;
+  protected readonly faCloudRain = faCloudRain;
+  protected readonly faSun = faSun;
 }
