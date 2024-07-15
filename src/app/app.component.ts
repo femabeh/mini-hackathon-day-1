@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { NavigationComponent } from './navigation/navigation.component';
 import { DataService } from './utils/services/data.service';
 import { WeatherParams } from './utils/interfaces/weather-params';
 import { defaultWeatherParams } from './config/weather-params';
@@ -9,7 +8,7 @@ import { defaultWeatherParams } from './config/weather-params';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavigationComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

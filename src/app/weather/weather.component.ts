@@ -5,6 +5,7 @@ import {faCloud, faCloudRain, faCloudSun, faSun} from "@fortawesome/free-solid-s
 import {DataService} from "../utils/services/data.service";
 import {WeatherParams} from "../utils/interfaces/weather-params";
 import { defaultWeatherParams } from '../config/weather-params';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-weather',
@@ -18,6 +19,7 @@ import { defaultWeatherParams } from '../config/weather-params';
     JsonPipe,
     NgForOf,
     KeyValuePipe,
+    NavigationComponent
   ],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.scss',

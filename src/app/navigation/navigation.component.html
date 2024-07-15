@@ -1,41 +1,3 @@
-<!--<div class="bg-slate-700 justify-center">
-  <div class="grid grid-cols-7">
-    <div class="col-span-2">
-      <div id="date-range-picker" class="p-4 text-center flex items-center">
-        <div class="text-gray-300 me-2">
-          <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{periodOfTime.start.toLocaleDateString()}}">
-        </div>
-        <div class="text-gray-300 me-2">
-          bis
-        </div>
-        <div class="text-gray-300">
-          <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{periodOfTime.end.toLocaleDateString()}}">
-        </div>
-      </div>
-    </div>
-    <div class="col-span-1 border-b-2">
-      <div class="pt-6 text-center">
-        <div class="text-gray-300">Heute</div>
-      </div>
-    </div>
-    <div class="col-span-1">
-      <div class="pt-6 text-center">
-        <div class="text-blue-400">Morgen</div>
-      </div>
-    </div>
-    <div class="col-span-1">
-      <div class="pt-6 text-center">
-        <div class="text-blue-400">Woche</div>
-      </div>
-    </div>
-    <div class="col-span-1">
-      <div class="pt-6 text-center">
-        <div class="text-blue-400">Monat</div>
-      </div>
-    </div>
-  </div>
-</div>-->
-
 <ng-template #NavItem let-city="city" let-time="time" let-type="type" let-temp="temp" let-coords="coords" let-selected="selected">
   <li class="rounded-xl" [class.bg-gray-600]="selected">
     <div class="grid grid-rows-3 grid-flow-col grid-cols-2 text-gray-200 p-3">
@@ -58,31 +20,22 @@
   </li>
 </ng-template>
 
-<button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-  <span class="sr-only">Open sidebar</span>
-  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-  </svg>
-</button>
-
-<aside id="default-sidebar" class="z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidenav">
-  <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-    <ul class="space-y-2">
-      <ng-container *ngTemplateOutlet="NavItem; context:{
-        'city': 'Berlin',
-        'time': '07:00',
-        'type': 'Wolkig',
-        'temp': '12',
-        'coords': 'H:65° L:42°',
-        'selected': true
-      }"></ng-container>
-      <ng-container *ngTemplateOutlet="NavItem; context:{
-        'city': 'Mecklenburg',
-        'time': '07:00',
-        'type': 'Sonnig',
-        'temp': '25',
-        'coords': 'H:72° L:28°'
-      }"></ng-container>
-    </ul>
-  </div>
-</aside>
+<div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <ul class="space-y-2">
+    <ng-container *ngTemplateOutlet="NavItem; context:{
+      'city': 'Berlin',
+      'time': '07:00',
+      'type': 'Wolkig',
+      'temp': '12',
+      'coords': 'H:65° L:42°',
+      'selected': true
+    }"></ng-container>
+    <ng-container *ngTemplateOutlet="NavItem; context:{
+      'city': 'Mecklenburg',
+      'time': '07:00',
+      'type': 'Sonnig',
+      'temp': '25',
+      'coords': 'H:72° L:28°'
+    }"></ng-container>
+  </ul>
+</div>
