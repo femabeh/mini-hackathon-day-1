@@ -62,7 +62,11 @@ export class WeatherComponent implements AfterViewInit {
     const longitude = cityData.results[0].longitude;
 
     if (latitude && longitude) {
-      const locationWeatherData = this.dataService.getWeather(latitude, longitude);
+      const locationWeatherData = await this.dataService.getWeather(
+        latitude,
+        longitude
+      );
+      console.log('location :', locationWeatherData);
     }
   }
 

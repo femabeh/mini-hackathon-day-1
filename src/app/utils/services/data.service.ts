@@ -17,6 +17,7 @@ export class DataService {
       const locationWeatherData = await this.fetchLocationWeatherData(params);
       return locationWeatherData;
     }
+    return null;
   }
 
   async fetchLocationWeatherData(params: WeatherParams) {
