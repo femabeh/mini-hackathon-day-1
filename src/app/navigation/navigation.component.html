@@ -22,6 +22,7 @@
 
 <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <ul class="space-y-2">
+
     <ng-container *ngTemplateOutlet="NavItem; context:{
       'city': 'Berlin',
       'time': '07:00',
@@ -30,12 +31,17 @@
       'coords': 'H:65° L:42°',
       'selected': true
     }"></ng-container>
-    <ng-container *ngTemplateOutlet="NavItem; context:{
-      'city': 'Mecklenburg',
-      'time': '07:00',
-      'type': 'Sonnig',
-      'temp': '25',
-      'coords': 'H:72° L:28°'
-    }"></ng-container>
+    
+    <div *ngFor="let city of citys">
+      <ng-container *ngTemplateOutlet="NavItem; context:{
+        'city': city,
+        'time': '07:00',
+        'type': 'Sonnig',
+        'temp': '25',
+        'coords': 'H:72° L:28°'
+      }"></ng-container>
+    </div>
+
+
   </ul>
 </div>

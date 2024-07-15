@@ -17,8 +17,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from '../utils/services/data.service';
 import { NavigationComponent } from '../navigation/navigation.component';
+<<<<<<< HEAD
 import { LocationWeatherService } from '../utils/services/location-weather.service';
 import { LocationData } from '../utils/interfaces/timeperiod';
+=======
+import { MarkedCitysService } from '../utils/services/marked-citys.service'
+>>>>>>> 7f47ae7 (Mark Citys)
 
 @Component({
   selector: 'app-weather',
@@ -39,8 +43,12 @@ import { LocationData } from '../utils/interfaces/timeperiod';
 })
 export class WeatherComponent implements AfterViewInit {
   dataService = inject(DataService);
+<<<<<<< HEAD
   locationWeatherService = inject(LocationWeatherService);
   locationWeatherData!: any;
+=======
+  markedCitys = inject(MarkedCitysService);
+>>>>>>> 7f47ae7 (Mark Citys)
 
   protected readonly faCloud = faCloud;
   protected readonly faCloudSun = faCloudSun;
@@ -52,7 +60,7 @@ export class WeatherComponent implements AfterViewInit {
   data: any;
   city_name: string = 'City';
   deg: any = 12;
-
+  dataTest: any[] = [];
 
   ngAfterViewInit(): void {
     this.locationWeatherService.locationData$.subscribe(
@@ -111,6 +119,7 @@ export class WeatherComponent implements AfterViewInit {
       if(locationWeatherData !== null) {
         this.deg = locationWeatherData.current.temperature2m.toFixed(2);
 
+        this.markedCitys.marked_citys.push(city);
       }
     
     }
