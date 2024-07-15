@@ -17,9 +17,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from '../utils/services/data.service';
 import { NavigationComponent } from '../navigation/navigation.component';
+
 import { LocationWeatherService } from '../utils/services/location-weather.service';
 import { LocationData } from '../utils/interfaces/timeperiod';
 import { HelpersService } from '../utils/services/helpers.service';
+
+import { MarkedCitysService } from '../utils/services/marked-citys.service'
+
 
 @Component({
   selector: 'app-weather',
@@ -40,9 +44,13 @@ import { HelpersService } from '../utils/services/helpers.service';
 })
 export class WeatherComponent implements AfterViewInit {
   dataService = inject(DataService);
+
   locationWeatherService = inject(LocationWeatherService);
   helpersService = inject(HelpersService);
   locationWeatherData!: any;
+
+  markedCitys = inject(MarkedCitysService);
+
 
   protected readonly faCloud = faCloud;
   protected readonly faCloudSun = faCloudSun;
@@ -91,6 +99,28 @@ export class WeatherComponent implements AfterViewInit {
       city: cityData.results[0].admin4,
     };
     this.locationWeatherService.setLocationData(data);
+    const latitude = cityData.results[0].latitude;
+    const longitude = cityData.results[0].longitude;
+
+    if (latitude && longitude) {
+      const locationWeatherData = await this.dataService.getWeather(
+        latitude,
+        longitude
+      );
+      console.log('location :', locationWeatherData);
+      this.city_name = city;
+      this.lat = latitude.toFixed(2);
+      this.lng = longitude.toFixed(2);
+      if(locationWeatherData !== null) {
+        this.deg = locationWeatherData.current.temperature2m.toFixed(2);
+
+        this.markedCitys.marked_citys.push(city);
+        this.markedCitys.temp.push(locationWeatherData.current.temperature2m.toFixed(2));
+        this.markedCitys.lat = latitude.toFixed(2);
+        this.markedCitys.lng = longitude.toFixed(2)
+      }
+    
+    }
   }
 
   async getData() {
