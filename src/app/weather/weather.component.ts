@@ -17,12 +17,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from '../utils/services/data.service';
 import { NavigationComponent } from '../navigation/navigation.component';
-<<<<<<< HEAD
+
 import { LocationWeatherService } from '../utils/services/location-weather.service';
 import { LocationData } from '../utils/interfaces/timeperiod';
-=======
+
 import { MarkedCitysService } from '../utils/services/marked-citys.service'
->>>>>>> 7f47ae7 (Mark Citys)
+
 
 @Component({
   selector: 'app-weather',
@@ -43,12 +43,12 @@ import { MarkedCitysService } from '../utils/services/marked-citys.service'
 })
 export class WeatherComponent implements AfterViewInit {
   dataService = inject(DataService);
-<<<<<<< HEAD
+
   locationWeatherService = inject(LocationWeatherService);
   locationWeatherData!: any;
-=======
+
   markedCitys = inject(MarkedCitysService);
->>>>>>> 7f47ae7 (Mark Citys)
+
 
   protected readonly faCloud = faCloud;
   protected readonly faCloudSun = faCloudSun;
