@@ -101,19 +101,14 @@ export class WeatherComponent implements AfterViewInit {
     this.locationWeatherService.setLocationData(data);
     const latitude = cityData.results[0].latitude;
     const longitude = cityData.results[0].longitude;
-
     if (latitude && longitude) {
       const locationWeatherData = await this.dataService.getWeather(
         latitude,
         longitude
       );
       console.log('location :', locationWeatherData);
-      this.city_name = city;
-      this.lat = latitude.toFixed(2);
-      this.lng = longitude.toFixed(2);
-      if(locationWeatherData !== null) {
-        this.deg = locationWeatherData.current.temperature2m.toFixed(2);
 
+      if(locationWeatherData !== null) {
         this.markedCitys.marked_citys.push(city);
         this.markedCitys.temp.push(locationWeatherData.current.temperature2m.toFixed(2));
         this.markedCitys.lat = latitude.toFixed(2);

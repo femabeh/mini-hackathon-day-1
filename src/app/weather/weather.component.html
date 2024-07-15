@@ -20,7 +20,7 @@
   </div>
 </ng-template>
 
-<ng-template #FutureEntry let-day="day" let-icon="icon" let-rain_possible="rain_possible">
+<ng-template #FutureEntry let-day="day" let-icon="icon" let-rain_possible="rain_possible" let-temp_min="temp_min" let-temp_max="temp_max">
   <div>
     <div class="grid grid-cols-2">
       <div class="col-span-1">
@@ -29,6 +29,9 @@
       <div class="col-span-1 text-gray-300 justify-center grid">
         <ng-container *ngTemplateOutlet="Icons; context: {'icon': icon}"></ng-container>
         <div class="font-bold text-center -mt-0.5 text-blue-400" *ngIf="rain_possible" style="font-size: 0.75rem;">{{ rain_possible }}%</div>
+      </div>
+      <div class="col-span-1">
+        <div class="text-2xl font-bold text-gray-200">{{ temp_max }} / {{ temp_min }}°</div>
       </div>
     </div>
     <hr class="mt-2 mb-2 border-gray-500">
@@ -66,7 +69,7 @@
      <div class="col-span-2 row-span-1 mb-4">
       <div class="bg-slate-700 rounded-md">
         <div class="p-6">
-          <div class="text-gray-300">Es bleibt die nächsten Stunden Windig.</div>
+          <div class="text-gray-300">{{ helpersService.getWeatherDescriptionText(locationWeatherData?.current.weatherCode) }}</div>
           <hr class="mt-4 mb-4 border-gray-500">
           <div class="flex overflow-x-scroll no-scrollbar">
             <ng-container *ngFor="let entry of locationWeatherData?.hourly.time; let i = index">
@@ -81,15 +84,11 @@
       <div class="col-span-1 row-span-1">
         <div class="bg-slate-700 rounded-md h-[22rem] overflow-x-scroll no-scrollbar">
           <div class="p-6">
-            <div class="text-gray-400">7 Tage vorausschau</div>
+            <div class="text-gray-400">7-day forecast</div>
             <hr class="mt-2 mb-2 border-gray-500">
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Heute', 'icon': 'cloud', 'rain_possible': '10'}"></ng-container>
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Montag', 'icon': 'cloud'}"></ng-container>
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Dienstag', 'icon': 'cloud'}"></ng-container>
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Mittwoch', 'icon': 'cloud'}"></ng-container>
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Donnerstag', 'icon': 'cloud'}"></ng-container>
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Freitag', 'icon': 'cloud'}"></ng-container>
-            <ng-container *ngTemplateOutlet="FutureEntry; context:{'day': 'Samstag', 'icon': 'cloud'}"></ng-container>
+            <ng-container *ngFor="let entry of locationWeatherData?.daily.time; let i = index">
+              <ng-container *ngTemplateOutlet="FutureEntry; context: { day: helpersService.getDayNameFromTimestamp(entry.getTime()), icon: helpersService.getWeatherCondition(locationWeatherData?.daily.precipitationProbabilityMax[i]), rain_possible: locationWeatherData?.daily.precipitationProbabilityMax[i], temp_min: locationWeatherData?.daily.temperature2mMin[i].toFixed(0), temp_max: locationWeatherData?.daily.temperature2mMax[i].toFixed(0) }"></ng-container>
+            </ng-container>
           </div>
         </div>
       </div>
