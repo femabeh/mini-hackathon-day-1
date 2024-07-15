@@ -1,9 +1,22 @@
-import {AfterViewInit, Component, inject} from '@angular/core';
-import {JsonPipe, KeyValuePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet} from "@angular/common";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faCloud, faCloudRain, faCloudSun, faSun} from "@fortawesome/free-solid-svg-icons";
-import {DataService} from "../utils/services/data.service";
-import {WeatherParams} from "../utils/interfaces/weather-params";
+import { AfterViewInit, Component, inject } from '@angular/core';
+import {
+  JsonPipe,
+  KeyValuePipe,
+  NgForOf,
+  NgIf,
+  NgSwitch,
+  NgSwitchCase,
+  NgTemplateOutlet,
+} from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  faCloud,
+  faCloudRain,
+  faCloudSun,
+  faSun,
+} from '@fortawesome/free-solid-svg-icons';
+import { DataService } from '../utils/services/data.service';
+import { WeatherParams } from '../utils/interfaces/weather-params';
 import { defaultWeatherParams } from '../config/weather-params';
 import { NavigationComponent } from '../navigation/navigation.component';
 
@@ -19,7 +32,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
     JsonPipe,
     NgForOf,
     KeyValuePipe,
-    NavigationComponent
+    NavigationComponent,
   ],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.scss',
@@ -38,6 +51,19 @@ export class WeatherComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getData();
+  }
+
+  async searchCity(event: Event) {
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    const city = (target.elements.namedItem('city') as HTMLInputElement).value;
+    const cityData = await this.dataService.fetchCityData(city);
+    const latitude = cityData.results[0].latitude;
+    const longitude = cityData.results[0].longitude;
+
+    if (latitude && longitude) {
+      const locationWeatherData = this.dataService.getWeather(latitude, longitude);
+    }
   }
 
   async getData() {

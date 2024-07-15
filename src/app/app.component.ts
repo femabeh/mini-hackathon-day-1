@@ -2,8 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { DataService } from './utils/services/data.service';
-import { WeatherParams } from './utils/interfaces/weather-params';
-import { defaultWeatherParams } from './config/weather-params';
 
 @Component({
   selector: 'app-root',
@@ -23,31 +21,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    this.searchCity();
-  }
-
-  async searchCity() {
-    const cityData = await this.dataService.fetchCityData('München');
-    //console.log('cityData', cityData);
-    this.latitude = cityData.results[0].latitude;
-    this.longitude = cityData.results[0].longitude;
-
-    if (this.latitude && this.longitude) {
-      this.getWeather();
-    }
-  }
-
-  async getWeather() {
-    if (this.latitude && this.longitude) {
-      const params: WeatherParams = {
-        ...defaultWeatherParams,
-        latitude: this.latitude,
-        longitude: this.longitude,
-      };
-      const locationWeatherData =
-        await this.dataService.fetchLocationWeatherData(params);
-
-      //console.log('data: ', locationWeatherData);
-    }
   }
 }

@@ -1,11 +1,24 @@
 import { Injectable } from '@angular/core';
 import { fetchWeatherApi } from 'openmeteo';
 import { WeatherParams } from '../interfaces/weather-params';
+import { defaultWeatherParams } from '../../config/weather-params';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
+  async getWeather(lat: number, lng: number) {
+    if (lat && lng) {
+      const params: WeatherParams = {
+        ...defaultWeatherParams,
+        latitude: lat,
+        longitude: lng,
+      };
+      const locationWeatherData = await this.fetchLocationWeatherData(params);
+      return locationWeatherData;
+    }
+  }
+
   async fetchLocationWeatherData(params: WeatherParams) {
     const url = 'https://api.open-meteo.com/v1/forecast';
     const responses = await fetchWeatherApi(url, params);
