@@ -47,6 +47,13 @@ export class WeatherComponent implements AfterViewInit {
   protected readonly faCloudRain = faCloudRain;
   protected readonly faSun = faSun;
 
+  lat: number = 0;
+  lng: number = 0;
+  data: any;
+  city_name: string = 'City';
+  deg: any = 12;
+
+
   ngAfterViewInit(): void {
     this.locationWeatherService.locationData$.subscribe(
       async (locationData: LocationData) => {
@@ -89,6 +96,24 @@ export class WeatherComponent implements AfterViewInit {
       city: cityData.results[0].admin4,
     };
     this.locationWeatherService.setLocationData(data);
+    const latitude = cityData.results[0].latitude;
+    const longitude = cityData.results[0].longitude;
+
+    if (latitude && longitude) {
+      const locationWeatherData = await this.dataService.getWeather(
+        latitude,
+        longitude
+      );
+      console.log('location :', locationWeatherData);
+      this.city_name = city;
+      this.lat = latitude.toFixed(2);
+      this.lng = longitude.toFixed(2);
+      if(locationWeatherData !== null) {
+        this.deg = locationWeatherData.current.temperature2m.toFixed(2);
+
+      }
+    
+    }
   }
 
   async getData() {
