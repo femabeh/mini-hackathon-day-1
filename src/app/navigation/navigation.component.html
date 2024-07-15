@@ -1,8 +1,8 @@
-<ng-template #NavItem let-city="city" let-time="time" let-type="type" let-temp="temp" let-coords="coords" let-selected="selected">
-  <li class="rounded-xl" [class.bg-gray-600]="selected">
+<ng-template #NavItem let-data="data" let-time="time" let-type="type" let-temp="temp" let-coords="coords" let-selected="selected">
+  <li class="rounded-xl cursor-pointer bg-gray-600" [class.bg-gray-700]="selected" (click)="showLocationWeather(data)">
     <div class="grid grid-rows-3 grid-flow-col grid-cols-2 text-gray-200 p-3">
       <div class="col-span-1">
-        <div class="font-bold">{{ city }}</div>
+        <div class="font-bold">{{ data?.city }}</div>
       </div>
       <div class="col-span-1">
         <div class="text-xs">{{time}} Uhr</div>
@@ -22,26 +22,14 @@
 
 <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <ul class="space-y-2">
-
-    <ng-container *ngTemplateOutlet="NavItem; context:{
-      'city': 'Berlin',
-      'time': '07:00',
-      'type': 'Wolkig',
-      'temp': '12',
-      'coords': 'H:65° L:42°',
-      'selected': true
-    }"></ng-container>
-    
-    <div *ngFor="let city of citys; let i = index">
+    <div *ngFor="let data of locationWeatherService.locations; let i = index">
       <ng-container *ngTemplateOutlet="NavItem; context:{
-        'city': city,
+        'data': data,
         'time': '07:00',
         'type': 'Sonnig',
-        'temp': markedCitys.temp[i],
-        'coords': 'H:' + markedCitys.lat + ' L:'+ markedCitys.lng[i] + '°'
+        'temp': '12',
+        'coords': 'H:' + data.lat.toFixed(0) + ' L:'+ data.lng.toFixed(0) + '°'
       }"></ng-container>
     </div>
-
-
   </ul>
 </div>

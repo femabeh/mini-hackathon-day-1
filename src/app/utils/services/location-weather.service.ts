@@ -12,6 +12,7 @@ export class LocationWeatherService {
     city: '',
   });
   locationData$ = this.locationDataSubject.asObservable();
+  locations: LocationData[] = [];
 
   setLocationData(data: LocationData) {
     this.locationDataSubject.next(data);

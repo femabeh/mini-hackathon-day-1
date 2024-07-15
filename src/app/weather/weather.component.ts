@@ -22,8 +22,7 @@ import { LocationWeatherService } from '../utils/services/location-weather.servi
 import { LocationData } from '../utils/interfaces/timeperiod';
 import { HelpersService } from '../utils/services/helpers.service';
 
-import { MarkedCitysService } from '../utils/services/marked-citys.service'
-
+import { MarkedCitysService } from '../utils/services/marked-citys.service';
 
 @Component({
   selector: 'app-weather',
@@ -51,7 +50,6 @@ export class WeatherComponent implements AfterViewInit {
 
   markedCitys = inject(MarkedCitysService);
 
-
   protected readonly faCloud = faCloud;
   protected readonly faCloudSun = faCloudSun;
   protected readonly faCloudRain = faCloudRain;
@@ -70,6 +68,7 @@ export class WeatherComponent implements AfterViewInit {
     const latitude = locationData.lat;
     const longitude = locationData.lng;
     const city = locationData.city;
+    console.log('new data:', locationData);
 
     if (latitude && longitude) {
       try {
@@ -99,23 +98,7 @@ export class WeatherComponent implements AfterViewInit {
       city: cityData.results[0].admin4,
     };
     this.locationWeatherService.setLocationData(data);
-    const latitude = cityData.results[0].latitude;
-    const longitude = cityData.results[0].longitude;
-    if (latitude && longitude) {
-      const locationWeatherData = await this.dataService.getWeather(
-        latitude,
-        longitude
-      );
-      console.log('location :', locationWeatherData);
-
-      if(locationWeatherData !== null) {
-        this.markedCitys.marked_citys.push(city);
-        this.markedCitys.temp.push(locationWeatherData.current.temperature2m.toFixed(2));
-        this.markedCitys.lat = latitude.toFixed(2);
-        this.markedCitys.lng = longitude.toFixed(2)
-      }
-    
-    }
+    this.locationWeatherService.locations.push(data);
   }
 
   async getData() {
