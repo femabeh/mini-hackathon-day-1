@@ -79,6 +79,11 @@ export class DataService {
         windGusts10mMax: daily.variables(8)!.valuesArray()!,
         windDirection10mDominant: daily.variables(9)!.valuesArray()!,
       },
+      timezone: timezone,
+      timezoneAbbreviation: timezoneAbbreviation,
+      latitude: latitude,
+      longitude: longitude,
+      city: '',
     };
 
     return weatherData;
