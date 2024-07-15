@@ -19,6 +19,7 @@ import { DataService } from '../utils/services/data.service';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { LocationWeatherService } from '../utils/services/location-weather.service';
 import { LocationData } from '../utils/interfaces/timeperiod';
+import { HelpersService } from '../utils/services/helpers.service';
 
 @Component({
   selector: 'app-weather',
@@ -40,19 +41,13 @@ import { LocationData } from '../utils/interfaces/timeperiod';
 export class WeatherComponent implements AfterViewInit {
   dataService = inject(DataService);
   locationWeatherService = inject(LocationWeatherService);
+  helpersService = inject(HelpersService);
   locationWeatherData!: any;
 
   protected readonly faCloud = faCloud;
   protected readonly faCloudSun = faCloudSun;
   protected readonly faCloudRain = faCloudRain;
   protected readonly faSun = faSun;
-
-  lat: number = 0;
-  lng: number = 0;
-  data: any;
-  city_name: string = 'City';
-  deg: any = 12;
-
 
   ngAfterViewInit(): void {
     this.locationWeatherService.locationData$.subscribe(
@@ -96,24 +91,6 @@ export class WeatherComponent implements AfterViewInit {
       city: cityData.results[0].admin4,
     };
     this.locationWeatherService.setLocationData(data);
-    const latitude = cityData.results[0].latitude;
-    const longitude = cityData.results[0].longitude;
-
-    if (latitude && longitude) {
-      const locationWeatherData = await this.dataService.getWeather(
-        latitude,
-        longitude
-      );
-      console.log('location :', locationWeatherData);
-      this.city_name = city;
-      this.lat = latitude.toFixed(2);
-      this.lng = longitude.toFixed(2);
-      if(locationWeatherData !== null) {
-        this.deg = locationWeatherData.current.temperature2m.toFixed(2);
-
-      }
-    
-    }
   }
 
   async getData() {
