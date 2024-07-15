@@ -32,13 +32,13 @@
       'selected': true
     }"></ng-container>
     
-    <div *ngFor="let city of citys">
+    <div *ngFor="let city of citys; let i = index">
       <ng-container *ngTemplateOutlet="NavItem; context:{
         'city': city,
         'time': '07:00',
         'type': 'Sonnig',
-        'temp': '25',
-        'coords': 'H:72° L:28°'
+        'temp': markedCitys.temp[i],
+        'coords': 'H:' + markedCitys.lat + ' L:'+ markedCitys.lng[i] + '°'
       }"></ng-container>
     </div>
 

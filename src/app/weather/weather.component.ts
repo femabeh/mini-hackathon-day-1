@@ -120,6 +120,9 @@ export class WeatherComponent implements AfterViewInit {
         this.deg = locationWeatherData.current.temperature2m.toFixed(2);
 
         this.markedCitys.marked_citys.push(city);
+        this.markedCitys.temp.push(locationWeatherData.current.temperature2m.toFixed(2));
+        this.markedCitys.lat = latitude.toFixed(2);
+        this.markedCitys.lng = longitude.toFixed(2)
       }
     
     }
