@@ -48,9 +48,17 @@ export class WeatherComponent implements AfterViewInit {
   lat: number = 0;
   lng: number = 0;
   data: any;
+  city_name: string = 'City';
+  deg: any = 12;
+
 
   ngAfterViewInit(): void {
     this.getData();
+  }
+
+  load_data() {
+    alert("test");
+
   }
 
   async searchCity(event: Event) {
@@ -67,6 +75,14 @@ export class WeatherComponent implements AfterViewInit {
         longitude
       );
       console.log('location :', locationWeatherData);
+      this.city_name = city;
+      this.lat = latitude.toFixed(2);
+      this.lng = longitude.toFixed(2);
+      if(locationWeatherData !== null) {
+        this.deg = locationWeatherData.current.temperature2m.toFixed(2);
+
+      }
+    
     }
   }
 
